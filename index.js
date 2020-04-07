@@ -28,7 +28,7 @@ app.use(function (req, res, next) {
     next(err);
 });
 // handle errors
-app.use(function (err, req, res, next) {
+app.use(function (err, req, res) {
     console.log(err);
 
     if (err.status === 404)
@@ -37,4 +37,4 @@ app.use(function (err, req, res, next) {
         res.status(500).json({ message: "Something looks wrong !!!" });
 });
 
-app.listen(80, function () { console.log('Node server listening on port 80'); });
+app.listen(8080, function () { console.log('Node server listening on port 80'); });
