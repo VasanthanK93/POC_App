@@ -3,6 +3,9 @@ const router = express.Router();
 
 const pocController = require('../controller/pocController')
 
-router.get('/getPocList',pocController.getPoc)
+router.get('/getPocList',pocController.getPocAll)
+router.get('/getPocTeam/:Team',pocController.getPocTeam)
+router.post('/addPoc/:Team',pocController.addPoc)
+router.put('/editPoc/:Team',pocController.editPoc)
 
 module.exports = router;

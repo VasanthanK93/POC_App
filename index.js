@@ -1,7 +1,6 @@
 const express = require("express")
 const bodyParser = require("body-parser")
 const app = express()
-// const users = require('./routes/userroutes.js')
 const pocRoutes = require('./routes/pocRoutes')
 const mongoose = require('./config/database.js')
 
@@ -16,9 +15,8 @@ app.use(function(req, res, next) {
     next();
   });
 
-// app.use('/users', users)
 
-app.use('/poc', pocRoutes)
+app.use('/poc/v1', pocRoutes)
 
 
 // handle 404 error
@@ -37,4 +35,4 @@ app.use(function (err, req, res) {
         res.status(500).json({ message: "Something looks wrong !!!" });
 });
 
-app.listen(8080, function () { console.log('Node server listening on port 80'); });
+app.listen( process.env.PORT || 8080, function () { console.log('Node server listening on port 8080'); });

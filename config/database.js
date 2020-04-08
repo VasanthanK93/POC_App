@@ -3,7 +3,7 @@ const mongodb = 'mongodb://admin:admin@poc-details-shard-00-00-mzyfx.gcp.mongodb
 
 // const mongodb = 'mongodb://localhost:27017/POCDetails'
 
-mongoose.connect(mongodb, { useNewUrlParser: true,useUnifiedTopology: true});
+mongoose.connect(mongodb, { useNewUrlParser: true,useUnifiedTopology: true, useFindAndModify: false});
 
 mongoose.Promise = global.Promise;
 

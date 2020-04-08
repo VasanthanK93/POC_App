@@ -1,19 +1,48 @@
 const pocModel = require('../model/pocModel')
 
-
 module.exports = {
- 
-    getPoc: async (req, res) => {
-     
-    try {
+
+    getPocAll: async (req, res) => {
         let getPocList = await pocModel.find({}) //pocModel.find({Team:"T1"})
         if (getPocList.length === 0){
             res.json({ Status: "Success", message: "No Data found", data: { pocList: getPocList } })
         }else {
             res.json({ Status: "Success", message: "Data Found" , data: { pocList: getPocList } })
         }
+    },
+    
+    getPocTeam : async (req, res) => {
+        let team = req.params.Team
+        let getPocList = await pocModel.find({Team:team}) //pocModel.find({Team:"T1"})
+        if (getPocList.length === 0){
+            res.json({ Status: "Success", message: "No Data found", data: { pocList: getPocList } })
+        }else {
+            res.json({ Status: "Success", message: "Data Found" , data: { pocList: getPocList } })
+        }
+    },
 
-    } catch (error) {
-        res.send(error);
-    }}
+    addPoc : async(req,res)=>{
+        let team = req.params.Team,
+        data = req.body
+        let addPoc = await pocModel.findOneAndUpdate({Team:team},{$push:{POCList:data}})
+        if(addPoc){
+            res.json({ Status: "Success", message: "New POC Created", data: { pocList: addPoc } })
+        }else{
+            res.json({ Status: "Error", message: "POC Creation error"})
+        }
+    },
+
+    editPoc : async(req,res)=>{
+        let team = req.params.Team,
+        data = req.body
+        console.log("inside")
+        let editPoc = await pocModel.findOneAndUpdate({Team:team,"POCList.id": data.id},{"POCList.$":data})
+        if(editPoc){
+            res.json({ Status: "Success", message: "New POC Created", data: { pocList: editPoc } })
+        }else{
+            res.json({ Status: "Error", message: "POC Creation error"})
+        }
+    }
+
 }
+ 
