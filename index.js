@@ -15,9 +15,6 @@ app.use(function(req, res, next) {
     next();
   });
 
-app.get('/', function (req, res) {
-    res.json({ "app": "Attendance App" });
-});
 
 // app.use('/users', users)
 
