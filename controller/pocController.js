@@ -5,9 +5,9 @@ module.exports = {
     getPocAll: async (req, res) => {
         let getPocList = await pocModel.find({}) //pocModel.find({Team:"T1"})
         if (getPocList.length === 0){
-            res.json({ Status: "Success", message: "No Data found", data: { pocList: getPocList } })
+            res.send(getPocList)
         }else {
-            res.json({ Status: "Success", message: "Data Found" , data: { pocList: getPocList } })
+            res.send(getPocList)
         }
     },
     
@@ -15,9 +15,9 @@ module.exports = {
         let team = req.params.Team
         let getPocList = await pocModel.find({Team:team}) //pocModel.find({Team:"T1"})
         if (getPocList.length === 0){
-            res.json({ Status: "Success", message: "No Data found", data: { pocList: getPocList } })
+            res.send(getPocList)
         }else {
-            res.json({ Status: "Success", message: "Data Found" , data: { pocList: getPocList } })
+            res.send(getPocList)
         }
     },
 
