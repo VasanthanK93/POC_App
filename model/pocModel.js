@@ -13,15 +13,16 @@ const Schema = mongoose.Schema
 
 const pocListSchema = new Schema({
     id:Number,
-    POCDesc:String,
-    WikiLink:String,
+    pocDesc:String,
+    wikiLink:String,
     status:String,
-    Remarks:String
+    remarks:String,
+    deleteStatus : Boolean
 })
 
 const pocSchema = new Schema({
-    Team: String,
-    POCList: [pocListSchema]
+    team: String,
+    pocList: [pocListSchema]
 })
 
 module.exports = mongoose.model('POC', pocSchema,'POC')
