@@ -26,7 +26,7 @@ module.exports = {
         data = req.body
         let addPoc = await pocModel.findOneAndUpdate({team:team},{$push:{pocList:data}})
         if(addPoc){
-            res.json({ Status: "Success", message: "New POC Created", data: { pocList: addPoc } })
+            res.send(addPoc)
         }else{
             res.json({ Status: "Error", message: "POC Creation error"})
         }
@@ -35,10 +35,9 @@ module.exports = {
     editPoc : async(req,res)=>{
         let team = req.params.Team,
         data = req.body
-        console.log("inside")
         let editPoc = await pocModel.findOneAndUpdate({team:team,"pocList.id": data.id},{"pocList.$":data})
         if(editPoc){
-            res.json({ Status: "Success", message: "New POC Created", data: { pocList: editPoc } })
+            res.send(editPoc)
         }else{
             res.json({ Status: "Error", message: "POC Creation error"})
         }
