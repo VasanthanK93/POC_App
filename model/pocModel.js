@@ -12,7 +12,7 @@ const Schema = mongoose.Schema
 // })
 
 const pocListSchema = new Schema({
-    id:Number,
+    id:String,
     pocDesc:String,
     wikiLink:String,
     status:String,
