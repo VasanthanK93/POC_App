@@ -1,5 +1,7 @@
+/**
+ * importing required modules 
+ */
 const mongoose = require("mongoose")
-
 const Schema = mongoose.Schema
 
 // mongoose.connection.on('open', function (ref) {
@@ -11,18 +13,17 @@ const Schema = mongoose.Schema
 //     });
 // })
 
-const pocListSchema = new Schema({
-    id:String,
+/**
+ * schema declaration for POC collection 
+ */
+const pocSchema = new Schema({
+    team: String,
+    pocId:String,
     pocDesc:String,
     wikiLink:String,
     status:String,
     remarks:String,
     deleteStatus : Boolean
-})
-
-const pocSchema = new Schema({
-    team: String,
-    pocList: [pocListSchema]
 })
 
 module.exports = mongoose.model('POC', pocSchema,'POC')

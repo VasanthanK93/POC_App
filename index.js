@@ -1,12 +1,18 @@
+/**
+ * importing required modules 
+ */
 const express = require("express")
 const bodyParser = require("body-parser")
 const app = express()
 const pocRoutes = require('./routes/pocRoutes')
 const mongoose = require('./config/database.js')
 
-
+//mongodb error console
 mongoose.connection.on('error', console.error.bind(console, 'Mongoose Connection Error'))
 
+/**
+ * express use bodyparser and cors setting 
+ */
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(function(req, res, next) {
@@ -16,7 +22,10 @@ app.use(function(req, res, next) {
   });
 
 
-// app.use('/users', users)
+/**
+ * routing paths
+ */
+  // app.use('/users', users)
 
 app.use('/poc/v1', pocRoutes)
 
@@ -27,6 +36,7 @@ app.use(function (req, res, next) {
     err.status = 404;
     next(err);
 });
+
 // handle errors
 app.use(function (err, req, res) {
     console.log(err);
@@ -37,4 +47,5 @@ app.use(function (err, req, res) {
         res.status(500).json({ message: "Something looks wrong !!!" });
 });
 
+//server starting at 8080 local
 app.listen( process.env.PORT || 8080, function () { console.log('Node server listening on port 8080'); });
