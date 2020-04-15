@@ -2,6 +2,7 @@
  * importing required modules 
  */
 const pocModel = require('../model/pocModel')
+const sequenceGenerator = require('./sequenceGenerator')
 
 module.exports = {
 /**
@@ -35,7 +36,9 @@ module.exports = {
  *  params: TeamName required 
  */
     addPoc : async(req,res)=>{
-        data = req.body
+        let data = req.body,
+            pocId =await sequenceGenerator(data.team)
+            data = {...data,pocId:pocId}
             const addPoc = await pocModel.create(data)
     
         if(addPoc){
