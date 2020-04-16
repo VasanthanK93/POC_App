@@ -56,7 +56,8 @@ module.exports = {
     editPoc : async(req,res)=>{
         let team = req.params.Team,
         data = req.body
-        let editPoc = await pocModel.findOneAndUpdate({team:team,"pocId": data.pocId},{$set:data})
+        // {new: true}
+        let editPoc = await pocModel.findOneAndUpdate({team:team,"pocId": data.pocId},{$set:data},{new: true})
         if(editPoc){
             res.send(editPoc)
         }else{
