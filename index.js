@@ -6,6 +6,7 @@ const bodyParser = require("body-parser")
 const cors = require('cors')
 const app = express()
 const pocRoutes = require('./routes/pocRoutes')
+const userRoutes = require('./routes/userRoutes')
 const mongoose = require('./config/database.js')
 
 //mongodb error console
@@ -28,7 +29,7 @@ app.use(cors())
 /**
  * routing paths
  */
-  // app.use('/users', users)
+app.use('/user/v1', userRoutes)
 
 app.use('/poc/v1', pocRoutes)
 
