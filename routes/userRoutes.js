@@ -12,5 +12,6 @@ router.post('/register', userController.register)
 router.post('/authenticate', userController.authenticate)
 router.get('/getUsersList', userController.getUsersList)
 router.get('/getUser/:User', userController.getUser)
+router.put('/editUser/:User',userController.editUser)
 
 module.exports = router;
