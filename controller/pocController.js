@@ -5,65 +5,88 @@ const pocModel = require('../model/pocModel')
 const sequenceGenerator = require('./sequenceGenerator')
 
 module.exports = {
-/**
- * get all data from poc collection no params required 
- */
+    /**
+     * get all data from poc collection no params required 
+     */
     getPocAll: async (req, res) => {
         let getPocList = await pocModel.find({})
-        if (getPocList.length === 0){
-            res.send(getPocList)
-        }else {
+        if (getPocList.length === 0) {
+            res.send({
+                Status: "error",
+                message: "POC List is not available"
+            })
+        } else {
             res.send(getPocList)
         }
     },
-    
-/**
- * get data by team name from poc collections  
- * params: TeamName required 
- */
-    getPocTeam : async (req, res) => {
+
+    /**
+     * get data by team name from poc collections  
+     * params: TeamName required 
+     */
+    getPocTeam: async (req, res) => {
         let team = req.params.Team
-        let getPocList = await pocModel.find({team:team})
-        if (getPocList.length === 0){
-            res.send(getPocList)
-        }else {
+        let getPocList = await pocModel.find({
+            team: team
+        })
+        if (getPocList.length === 0) {
+            res.send({
+                Status: "error",
+                message: "POC List is not available"
+            })
+        } else {
             res.send(getPocList)
         }
     },
 
-/**
- * insert data to POC Collections
- *  params: TeamName required 
- */
-    addPoc : async(req,res)=>{
+    /**
+     * insert data to POC Collections
+     *  params: TeamName required 
+     */
+    addPoc: async (req, res) => {
         let data = req.body,
-            pocId =await sequenceGenerator(data.team)
-            data = {...data,pocId:pocId}
-            const addPoc = await pocModel.create(data)
-    
-        if(addPoc){
+            pocId = await sequenceGenerator(data.team)
+        data = {
+            ...data,
+            pocId: pocId
+        }
+        const addPoc = await pocModel.create(data)
+
+        if (addPoc.length === 0) {
+            res.send({
+                Status: "Error",
+                message: "POC Creation error"
+            })
+        } else {
             res.send(addPoc)
-        }else{
-            res.json({ Status: "Error", message: "POC Creation error"})
         }
     },
 
-/**
- * edit specfic data of POC Collections
- *  params: TeamName required 
- *  body: pocId requires 
- */
-    editPoc : async(req,res)=>{
+    /**
+     * edit specfic data of POC Collections
+     *  params: TeamName required 
+     *  body: pocId requires 
+     */
+    editPoc: async (req, res) => {
         let team = req.params.Team,
-        data = req.body
+            data = req.body
         // {new: true}
-        let editPoc = await pocModel.findOneAndUpdate({team:team,"pocId": data.pocId},{$set:data},{new: true})
-        if(editPoc){
+        let editPoc = await pocModel.findOneAndUpdate({
+            team: team,
+            "pocId": data.pocId
+        }, {
+            $set: data
+        }, {
+            new: true
+        })
+        if (editPoc.length === 0) {
+            res.send({
+                Status: "Error",
+                message: "POC Edit error"
+            })
+        } else {
             res.send(editPoc)
-        }else{
-            res.json({ Status: "Error", message: "POC Creation error"})
         }
     }
 
 }
- 

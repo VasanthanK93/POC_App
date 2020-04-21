@@ -18,12 +18,12 @@ const Schema = mongoose.Schema
  */
 const pocSchema = new Schema({
     team: String,
-    pocId:String,
-    pocDesc:String,
-    wikiLink:String,
-    status:String,
-    remarks:String,
-    deleteStatus : Boolean
+    pocId: String,
+    pocDesc: String,
+    wikiLink: String,
+    status: String,
+    remarks: String,
+    deleteStatus: Boolean
 })
 
-module.exports = mongoose.model('POC', pocSchema,'POC')
+module.exports = mongoose.model('POC', pocSchema, 'POC')
