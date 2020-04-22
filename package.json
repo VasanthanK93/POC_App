@@ -1,9 +1,10 @@
 {
-  "name": "POC_App",
+  "name": "poc_app",
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
+    "bcrypt": "^4.0.1",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
@@ -14,6 +15,6 @@
     "dev": "nodemon index.js"
   },
   "engines": {
-    "node": "8.9.4"
+    "node": "12.16.2"
   }
 }

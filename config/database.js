@@ -7,7 +7,11 @@ const mongodb = 'mongodb://admin:admin@poc-details-shard-00-00-mzyfx.gcp.mongodb
 /**
  * connecting to Mongodb through mongoose 
  */
-mongoose.connect(mongodb, { useNewUrlParser: true,useUnifiedTopology: true, useFindAndModify: false});
+mongoose.connect(mongodb, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useFindAndModify: false
+});
 
 mongoose.Promise = global.Promise;
 

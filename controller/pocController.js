@@ -10,7 +10,7 @@ module.exports = {
      */
     getPocAll: async (req, res) => {
         let getPocList = await pocModel.find({})
-        if (getPocList.length === 0) {
+        if (!getPocList) {
             res.send({
                 Status: "error",
                 message: "POC List is not available"
@@ -29,7 +29,7 @@ module.exports = {
         let getPocList = await pocModel.find({
             team: team
         })
-        if (getPocList.length === 0) {
+        if (!getPocList) {
             res.send({
                 Status: "error",
                 message: "POC List is not available"
@@ -52,7 +52,7 @@ module.exports = {
         }
         const addPoc = await pocModel.create(data)
 
-        if (addPoc.length === 0) {
+        if (!addPoc) {
             res.send({
                 Status: "Error",
                 message: "POC Creation error"
@@ -79,7 +79,7 @@ module.exports = {
         }, {
             new: true
         })
-        if (editPoc.length === 0) {
+        if (!editPoc) {
             res.send({
                 Status: "Error",
                 message: "POC Edit error"

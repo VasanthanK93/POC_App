@@ -2,6 +2,8 @@
  * importing required modules 
  */
 const userModel = require('../model/userModel')
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
 
 module.exports = {
 
@@ -13,20 +15,26 @@ module.exports = {
         let finduser = await userModel.findOne({
             userName: req.body.userName
         });
-        if (finduser.length === 0) {
-            let userData = new userModel(req.body)
+        if (!finduser) {
+            let passwordHash = await bcrypt.hash(req.body.password, saltRounds)
+            let userData = {
+                userName: req.body.userName,
+                password: passwordHash,
+                role: req.body.role,
+                teams: req.body.teams
+            }
             let createUser = await userModel.create(userData);
             res.send({
                 status: "success",
                 message: "User Created successfully!!!",
                 data: createUser
             })
-        }
-        res.send({
-            status: "error",
-            message: "User Already Available!!!",
-            data: null
-        })
+        } else
+            res.send({
+                status: "error",
+                message: "User Already Available!!!",
+                data: null
+            })
     },
 
     /**
@@ -37,27 +45,30 @@ module.exports = {
         let finduser = await userModel.findOne({
             userName: req.body.userName
         })
-        if (finduser.length === 0) {
+        if (!finduser) {
             res.send({
                 Status: "error",
                 message: "user is not available"
             })
         } else {
-            if (req.body.password == finduser.password) {
-                return res.send({
+            let pwdCompare = await bcrypt.compare(req.body.password, finduser.password)
+            if (pwdCompare) {
+                res.send({
                     status: "Success",
                     message: "user is authenticated successfully",
                     data: {
                         user: finduser
                     }
                 })
+            } else {
+                res.send({
+                    status: "error",
+                    message: "Invalid LoginID/Password",
+                    data: null
+                })
             }
-            res.send({
-                status: "error",
-                message: "Invalid LoginID/Password",
-                data: null
-            })
         }
+
     },
 
     /**
@@ -65,7 +76,7 @@ module.exports = {
      */
     getUsersList: async (req, res) => {
         let finduser = await userModel.find({})
-        if (finduser.length === 0) {
+        if (!finduser) {
             res.send({
                 status: "error",
                 message: "unable to get user list"
@@ -84,7 +95,7 @@ module.exports = {
         let finduser = await userModel.find({
             userName: user
         })
-        if (finduser.length === 0) {
+        if (!finduser) {
             res.send({
                 Status: "error",
                 message: "user is not available"
@@ -109,7 +120,7 @@ module.exports = {
         }, {
             new: true
         })
-        if (editUser.length === 0) {
+        if (!editUser) {
             res.send({
                 Status: "Error",
                 message: "Unable to Edit User"
