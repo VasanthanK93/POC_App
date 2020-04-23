@@ -7,6 +7,8 @@ const cors = require('cors')
 const app = express()
 const pocRoutes = require('./routes/pocRoutes')
 const userRoutes = require('./routes/userRoutes')
+const teamRoutes = require('./routes/teamRoutes')
+const roleRoutes = require('./routes/roleRoutes')
 const mongoose = require('./config/database.js')
 
 //mongodb error console
@@ -34,6 +36,10 @@ app.use(cors())
 app.use('/user/v1', userRoutes)
 
 app.use('/poc/v1', pocRoutes)
+
+app.use('/role/v1',roleRoutes)
+
+app.use('/team/v1',teamRoutes)
 
 
 // handle 404 error
