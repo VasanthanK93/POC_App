@@ -12,7 +12,8 @@ const userSchema = new Schema({
     password: String,
     role: String,
     teams: Array,
-    userActive: Boolean
+    userActive: Boolean,
+    isUserApproved: Boolean
 })
 
 module.exports = mongoose.model('userManagement', userSchema, 'userManagement')
