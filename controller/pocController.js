@@ -1,7 +1,6 @@
 /**
  * importing required modules 
  */
-const moment = require('moment');
 const pocModel = require('../model/pocModel')
 const sequenceGenerator = require('./sequenceGenerator')
 
