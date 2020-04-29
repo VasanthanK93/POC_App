@@ -42,7 +42,7 @@ app.use('/role/v1',roleRoutes)
 
 app.use('/team/v1',teamRoutes)
 
-app.use('pocHistory/v1',pocHistoryRoutes)
+app.use('/pocHistory/v1',pocHistoryRoutes)
 
 
 // handle 404 error
