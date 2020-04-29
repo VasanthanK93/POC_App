@@ -9,6 +9,7 @@ const pocRoutes = require('./routes/pocRoutes')
 const userRoutes = require('./routes/userRoutes')
 const teamRoutes = require('./routes/teamRoutes')
 const roleRoutes = require('./routes/roleRoutes')
+const pocHistoryRoutes = require('./routes/pocHistoryRoutes')
 const mongoose = require('./config/database.js')
 
 //mongodb error console
@@ -40,6 +41,8 @@ app.use('/poc/v1', pocRoutes)
 app.use('/role/v1',roleRoutes)
 
 app.use('/team/v1',teamRoutes)
+
+app.use('pocHistory/v1',pocHistoryRoutes)
 
 
 // handle 404 error
