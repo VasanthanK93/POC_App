@@ -22,7 +22,9 @@ module.exports = {
                 password: passwordHash,
                 role: req.body.role,
                 teams: req.body.teams,
-                isUserApproved: false
+                isUserApproved: false,
+                createdDate: new Date(),
+                modifiedDate: new Date()
             }
             let createUser = await userModel.create(userData);
             res.send({
@@ -51,7 +53,7 @@ module.exports = {
                 Status: "error",
                 message: "user is not available"
             })
-        } else if(finduser && finduser.isUserApproved){
+        } else if (finduser && finduser.isUserApproved) {
             let pwdCompare = await bcrypt.compare(req.body.password, finduser.password)
             if (pwdCompare) {
                 res.send({
@@ -68,10 +70,10 @@ module.exports = {
                     data: null
                 })
             }
-        }else if (finduser && !finduser.isUserApproved){
+        } else if (finduser && !finduser.isUserApproved) {
             res.send({
-                status:"error",
-                message:"user not approved by admin,Please contact admin"
+                status: "error",
+                message: "user not approved by admin,Please contact admin"
             })
         }
 
@@ -117,7 +119,10 @@ module.exports = {
      */
     editUser: async (req, res) => {
         let user = req.params.User,
-            data = req.body
+            data = {
+                ...req.body,
+                modifiedDate: new Date()
+            }
         // {new: true}
         let editUser = await userModel.findOneAndUpdate({
             userName: user
