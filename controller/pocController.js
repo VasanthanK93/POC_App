@@ -1,8 +1,8 @@
 /**
  * importing required modules 
  */
-const moment = require('moment');
 const pocModel = require('../model/pocModel')
+const pocHistoryModel = require('../model/pocHistoryModel') 
 const sequenceGenerator = require('./sequenceGenerator')
 
 module.exports = {
@@ -75,6 +75,11 @@ module.exports = {
             data = {
                 ...req.body,
                 modifiedDate: new Date()
+            },
+            insertData = {
+                ...req.body,
+                createdDate: new Date(),
+                modifiedDate: new Date()
             }
         // {new: true}
         let editPoc = await pocModel.findOneAndUpdate({
@@ -85,6 +90,7 @@ module.exports = {
         }, {
             new: true
         })
+        let changeHistory = await pocHistoryModel.create(insertData)
         if (!editPoc) {
             res.send({
                 Status: "Error",
