@@ -3,6 +3,7 @@
  */
 const userModel = require('../model/userModel')
 const bcrypt = require('bcrypt');
+var jwt = require("jsonwebtoken")
 const saltRounds = 10;
 
 module.exports = {
@@ -51,7 +52,11 @@ module.exports = {
                 Status: "error",
                 message: "user is not available"
             })
+<<<<<<< Updated upstream
         } else if(finduser && finduser.isUserApproved){
+=======
+        } else if (finduser && finduser.isUserApproved) {
+>>>>>>> Stashed changes
             let pwdCompare = await bcrypt.compare(req.body.password, finduser.password)
             if (pwdCompare) {
                 res.send({
@@ -68,13 +73,19 @@ module.exports = {
                     data: null
                 })
             }
+<<<<<<< Updated upstream
         }else if (finduser && !finduser.isUserApproved){
             res.send({
                 status:"error",
                 message:"user not approved by admin,Please contact admin"
+=======
+        } else if (finduser && !finduser.isUserApproved) {
+            res.send({
+                status: "error",
+                message: "user not approved by admin,Please contact admin"
+>>>>>>> Stashed changes
             })
         }
-
     },
 
     /**
