@@ -1,6 +1,7 @@
 /**
  * importing required modules 
  */
+const moment = require('moment');
 const pocModel = require('../model/pocModel')
 const sequenceGenerator = require('./sequenceGenerator')
 
@@ -48,7 +49,9 @@ module.exports = {
             pocId = await sequenceGenerator(data.team)
         data = {
             ...data,
-            pocId: pocId
+            pocId: pocId,
+            createdDate: new Date(),
+            modifiedDate: new Date()
         }
         const addPoc = await pocModel.create(data)
 
@@ -69,7 +72,10 @@ module.exports = {
      */
     editPoc: async (req, res) => {
         let team = req.params.Team,
-            data = req.body
+            data = {
+                ...req.body,
+                modifiedDate: new Date()
+            }
         // {new: true}
         let editPoc = await pocModel.findOneAndUpdate({
             team: team,

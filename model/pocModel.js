@@ -23,7 +23,8 @@ const pocSchema = new Schema({
     wikiLink: String,
     status: String,
     remarks: String,
-    deleteStatus: Boolean
+    createdDate: Date,
+    modifiedDate: Date
 })
 
 module.exports = mongoose.model('POC', pocSchema, 'POC')
