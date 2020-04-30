@@ -2,6 +2,7 @@
  * importing required modules 
  */
 const pocModel = require('../model/pocModel')
+const pocHistoryModel = require('../model/pocHistoryModel') 
 const sequenceGenerator = require('./sequenceGenerator')
 
 module.exports = {
@@ -48,7 +49,9 @@ module.exports = {
             pocId = await sequenceGenerator(data.team)
         data = {
             ...data,
-            pocId: pocId
+            pocId: pocId,
+            createdDate: new Date(),
+            modifiedDate: new Date()
         }
         const addPoc = await pocModel.create(data)
 
@@ -69,7 +72,15 @@ module.exports = {
      */
     editPoc: async (req, res) => {
         let team = req.params.Team,
-            data = req.body
+            data = {
+                ...req.body,
+                modifiedDate: new Date()
+            },
+            insertData = {
+                ...req.body,
+                createdDate: new Date(),
+                modifiedDate: new Date()
+            }
         // {new: true}
         let editPoc = await pocModel.findOneAndUpdate({
             team: team,
@@ -79,6 +90,7 @@ module.exports = {
         }, {
             new: true
         })
+        let changeHistory = await pocHistoryModel.create(insertData)
         if (!editPoc) {
             res.send({
                 Status: "Error",

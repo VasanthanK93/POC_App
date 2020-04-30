@@ -13,7 +13,9 @@ const userSchema = new Schema({
     role: String,
     teams: Array,
     userActive: Boolean,
-    isUserApproved: Boolean
+    isUserApproved: Boolean,
+    createdDate: Date,
+    modifiedDate: Date
 })
 
 module.exports = mongoose.model('userManagement', userSchema, 'userManagement')

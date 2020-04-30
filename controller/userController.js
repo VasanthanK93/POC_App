@@ -23,7 +23,9 @@ module.exports = {
                 password: passwordHash,
                 role: req.body.role,
                 teams: req.body.teams,
-                isUserApproved: false
+                isUserApproved: false,
+                createdDate: new Date(),
+                modifiedDate: new Date()
             }
             let createUser = await userModel.create(userData);
             res.send({
@@ -124,7 +126,10 @@ module.exports = {
      */
     editUser: async (req, res) => {
         let user = req.params.User,
-            data = req.body
+            data = {
+                ...req.body,
+                modifiedDate: new Date()
+            }
         // {new: true}
         let editUser = await userModel.findOneAndUpdate({
             userName: user

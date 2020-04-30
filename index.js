@@ -10,6 +10,7 @@ const userRoutes = require('./routes/userRoutes')
 const teamRoutes = require('./routes/teamRoutes')
 const roleRoutes = require('./routes/roleRoutes')
 const authRoutes = require('./routes/authRoutes')
+const pocHistoryRoutes = require('./routes/pocHistoryRoutes')
 const mongoose = require('./config/database.js')
 const validateUser = require('./authentication')
 
@@ -45,6 +46,8 @@ app.use('/poc/v1',validateUser, pocRoutes)
 app.use('/role/v1',validateUser,roleRoutes)
 
 app.use('/team/v1',validateUser,teamRoutes)
+
+app.use('/pocHistory/v1',pocHistoryRoutes)
 
 
 // handle 404 error
