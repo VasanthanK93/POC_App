@@ -5,7 +5,7 @@ const mongoose = require("mongoose")
 const Schema = mongoose.Schema
 
 /**
- * schema declaration for POC collection 
+ * schema declaration for role collection 
  */
 const roleSchema = new Schema({
     roleId: String,

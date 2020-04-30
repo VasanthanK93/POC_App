@@ -54,7 +54,17 @@ module.exports = {
                 Status: "error",
                 message: "user is not available"
             })
-        } else if (finduser && finduser.isUserApproved) {
+        } else if (finduser && !finduser.isUserApproved) {
+            res.send({
+                status: "error",
+                message: "user not approved by admin,Please contact admin"
+            })
+        } else if (finduser && finduser.userActive === false) {
+            res.send({
+                status: "error",
+                message: "user is inactive"
+            })
+        } else {
             let pwdCompare = await bcrypt.compare(req.body.password, finduser.password)
             if (pwdCompare) {
                 const token = jwt.sign({
@@ -77,11 +87,6 @@ module.exports = {
                     data: null
                 })
             }
-        } else if (finduser && !finduser.isUserApproved) {
-            res.send({
-                status: "error",
-                message: "user not approved by admin,Please contact admin"
-            })
         }
 
     },
@@ -119,8 +124,9 @@ module.exports = {
             res.send(finduser)
         }
     },
+
     /**
-     * edit specfic user of userManagement Collections
+     * edit specfic user data of userManagement Collections
      *  params: userName required 
      *  body: changed userdata 
      */
@@ -130,21 +136,74 @@ module.exports = {
                 ...req.body,
                 modifiedDate: new Date()
             }
-        // {new: true}
-        let editUser = await userModel.findOneAndUpdate({
+        /**
+         * {new: true}-- to get the updated value from mongodb
+         */
+        if (data.hasOwnProperty("password")) {
+            let bcrypt_pass = await bcrypt.hash(data.password, saltRounds),
+                updated_data = {
+                    ...data,
+                    password: bcrypt_pass
+                }
+            let editUser = await userModel.findOneAndUpdate({
+                userName: user
+            }, {
+                $set: updated_data
+            }, {
+                new: true
+            })
+            if (!editUser) {
+                res.send({
+                    Status: "Error",
+                    message: "Unable to Edit User"
+                })
+            } else {
+                res.send(editUser)
+            }
+
+        } else {
+            let editUser = await userModel.findOneAndUpdate({
+                userName: user
+            }, {
+                $set: data
+            }, {
+                new: true
+            })
+            if (!editUser) {
+                res.send({
+                    Status: "Error",
+                    message: "Unable to Edit User"
+                })
+            } else {
+                res.send(editUser)
+            }
+        }
+    },
+
+    /**
+     * reset password for specific user 
+     */
+    resetPwd: async (req, res) => {
+        let user = req.params.User,
+            bcrypt_pass = await bcrypt.hash(req.body.password, saltRounds),
+            data = {
+                password: bcrypt_pass,
+                modifiedDate: new Date()
+            }
+        let editPwd = await userModel.findOneAndUpdate({
             userName: user
         }, {
             $set: data
         }, {
             new: true
         })
-        if (!editUser) {
+        if (!editPwd) {
             res.send({
                 Status: "Error",
-                message: "Unable to Edit User"
+                message: "Unable to Change the password"
             })
         } else {
-            res.send(editUser)
+            res.send(editPwd)
         }
     }
 

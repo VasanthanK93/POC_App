@@ -1,9 +1,11 @@
+/**
+ * importing required modules 
+ */
 const jwt = require("jsonwebtoken")
-// const express = require("express")
-// const app = express()
 
-// app.set('secretkey', 'pocforum')
-
+/**
+ * function for validating the JWT token
+ */
 const validateUser = async (req, res,next)=>{
    await jwt.verify(req.headers['x-access-token'],req.app.get('secretkey'),(err,decoded)=>{
     if (err) {

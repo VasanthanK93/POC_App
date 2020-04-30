@@ -5,7 +5,7 @@ const mongoose = require("mongoose")
 const Schema = mongoose.Schema
 
 /**
- * schema declaration for POC collection 
+ * schema declaration for user collection 
  */
 const userSchema = new Schema({
     userName: String,

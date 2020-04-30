@@ -14,23 +14,21 @@ const pocHistoryRoutes = require('./routes/pocHistoryRoutes')
 const mongoose = require('./config/database.js')
 const validateUser = require('./authentication')
 
-//mongodb error console
+/**
+ * mongodb error console
+ */ 
 mongoose.connection.on('error', console.error.bind(console, 'Mongoose Connection Error'))
 
 /**
  * express use bodyparser and cors setting 
+ * setting secret Key for JWT
  */
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
     extended: true
 }))
+
 app.use(cors())
-// app.use(function(req, res, next) {
-//     res.header("Access-Control-Allow-Origin", "*");
-//     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-//     res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
-//     next();
-//   });
 
 app.set('secretkey', 'pocforum')
 
@@ -39,7 +37,7 @@ app.set('secretkey', 'pocforum')
  */
 app.use('/auth/v1',authRoutes)
  
-app.use('/user/v1',validateUser, userRoutes)
+app.use('/user/v1', userRoutes)
 
 app.use('/poc/v1',validateUser, pocRoutes)
 
@@ -50,14 +48,18 @@ app.use('/team/v1',validateUser,teamRoutes)
 app.use('/pocHistory/v1',pocHistoryRoutes)
 
 
-// handle 404 error
+/** 
+ * handle 404 error
+ */ 
 app.use(function (req, res, next) {
     let err = new Error('Not Found');
     err.status = 404;
     next(err);
 });
 
-// handle errors
+/** 
+ * handle errors
+ */ 
 app.use(function (err, req, res) {
     console.log(err);
 
@@ -71,7 +73,9 @@ app.use(function (err, req, res) {
         });
 });
 
-//server starting at 8080 local
+/**
+ * server will serve in 8080 port if env.port is not available
+ */
 app.listen(process.env.PORT || 8080, function () {
     console.log('Node server listening on port 8080');
 });

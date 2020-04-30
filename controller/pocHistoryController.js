@@ -9,7 +9,9 @@ module.exports = {
      */
     getPOCHistory: async (req, res) => {
         let pocID = req.params.POCId
-        let getChangeHistory = await roleModel.find({pocId:pocID})
+        let getChangeHistory = await roleModel.find({
+            pocId: pocID
+        })
         if (!getChangeHistory) {
             res.send({
                 Status: "error",

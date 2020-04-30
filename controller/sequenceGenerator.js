@@ -1,4 +1,11 @@
+/**
+ * importing required modules 
+ */
 const sequenceModel = require('../model/sequenceModel')
+
+/**
+ * function for autgeneration of POC ID
+ */
 
 const sequenceGenerator = async (team) => {
     const seqId = await sequenceModel.find({

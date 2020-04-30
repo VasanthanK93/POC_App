@@ -10,5 +10,6 @@ const userController = require('../controller/userController')
  */
 router.post('/register', userController.register)
 router.post('/authenticate', userController.authenticate)
+router.put('/resetPwd/:User', userController.resetPwd)
 
 module.exports = router;

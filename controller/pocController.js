@@ -2,10 +2,11 @@
  * importing required modules 
  */
 const pocModel = require('../model/pocModel')
-const pocHistoryModel = require('../model/pocHistoryModel') 
+const pocHistoryModel = require('../model/pocHistoryModel')
 const sequenceGenerator = require('./sequenceGenerator')
 
 module.exports = {
+
     /**
      * get all data from poc collection no params required 
      */
@@ -66,7 +67,8 @@ module.exports = {
     },
 
     /**
-     * edit specfic data of POC Collections
+     * edit specfic data of POC Collections and 
+     * add a record to POCHistory Collection
      *  params: TeamName required 
      *  body: pocId requires 
      */
@@ -81,7 +83,9 @@ module.exports = {
                 createdDate: new Date(),
                 modifiedDate: new Date()
             }
-        // {new: true}
+        /**
+         * {new: true}-- to get the updated value from mongodb
+         */
         let editPoc = await pocModel.findOneAndUpdate({
             team: team,
             "pocId": data.pocId
