@@ -9,8 +9,10 @@ const pocRoutes = require('./routes/pocRoutes')
 const userRoutes = require('./routes/userRoutes')
 const teamRoutes = require('./routes/teamRoutes')
 const roleRoutes = require('./routes/roleRoutes')
+const authRoutes = require('./routes/authRoutes')
 const pocHistoryRoutes = require('./routes/pocHistoryRoutes')
 const mongoose = require('./config/database.js')
+const validateUser = require('./authentication')
 
 //mongodb error console
 mongoose.connection.on('error', console.error.bind(console, 'Mongoose Connection Error'))
@@ -30,17 +32,20 @@ app.use(cors())
 //     next();
 //   });
 
+app.set('secretkey', 'pocforum')
 
 /**
  * routing paths
  */
-app.use('/user/v1', userRoutes)
+app.use('/auth/v1',authRoutes)
+ 
+app.use('/user/v1',validateUser, userRoutes)
 
-app.use('/poc/v1', pocRoutes)
+app.use('/poc/v1',validateUser, pocRoutes)
 
-app.use('/role/v1',roleRoutes)
+app.use('/role/v1',validateUser,roleRoutes)
 
-app.use('/team/v1',teamRoutes)
+app.use('/team/v1',validateUser,teamRoutes)
 
 app.use('/pocHistory/v1',pocHistoryRoutes)
 
