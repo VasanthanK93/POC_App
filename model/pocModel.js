@@ -13,7 +13,7 @@ const pocSchema = new Schema({
     pocDesc: String,
     wikiLink: String,
     status: String,
-    remarks: String,
+    notes: String,
     createdDate: Date,
     modifiedDate: Date
 })
